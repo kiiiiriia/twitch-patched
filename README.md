@@ -22,6 +22,7 @@ Patch settings include search, emote provider controls and UI customization. Gro
 | 7TV, FFZ, Chatterino and DankChat badges | Shows one third-party badge next to the Twitch badges in live and replay chat, in native and React Native chat. Someone with several badges shows the first enabled one in the order 7TV, DankChat, Chatterino, FrankerFaceZ. Patch settings can turn off each provider without a restart. Animated badges show their first frame. |
 | Favorite emotes | Adds a Favorites section to the emote picker in native and React Native chat. Long-press an emote in the picker or tap the star on its card. Emotes you cannot use yet show as locked, and channel BTTV, FFZ and 7TV emotes only show where they are available. |
 | Reload stream | Reloads live streams with a double-tap control. |
+| Watch sub-only VODs | Plays subscriber-only VODs and highlights from Twitch's public video storage when the manifest is refused. DMCA-muted parts stay muted. Based on [TwitchNoSub](https://github.com/besuper/TwitchNoSub). |
 | Show deleted messages | Keeps deleted and moderated messages readable in native and React Native chat. |
 | UI settings | Controls player buttons, channel actions, extensions, Hype Trains, leaderboards and fullscreen system bars. |
 | Block client-requested ads | Blocks native player ad requests. Restart Twitch after changing this setting. |

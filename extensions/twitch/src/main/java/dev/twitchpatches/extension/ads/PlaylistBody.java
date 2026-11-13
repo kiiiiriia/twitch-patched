@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final class PlaylistBody implements ReadCallback {
+public final class PlaylistBody implements ReadCallback {
     static final int LIMIT = 512 * 1024;
-    interface Completion { void complete(byte[] body); void error(Exception error); }
+    public interface Completion { void complete(byte[] body); void error(Exception error); }
     private final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     private final Completion completion;
     private boolean ended;
 
-    PlaylistBody(Completion completion) { this.completion = completion; }
+    public PlaylistBody(Completion completion) { this.completion = completion; }
     @Override public int getTimeout() { return 2; }
     @Override public synchronized void onData(ByteBuffer data, boolean end) {
         byte[] chunk = new byte[data.remaining()];
@@ -36,7 +36,7 @@ final class PlaylistBody implements ReadCallback {
         if (!ended) { ended = true; completion.error(error); }
     }
 
-    static Response response(Request request, Response original, byte[] body) {
+    public static Response response(Request request, Response original, byte[] body) {
         Response response = new Response(original.getStatus(), original.getUrl());
         response.setHeader("Content-Type", "application/vnd.apple.mpegurl");
         response.setHeader("Content-Length", Integer.toString(body.length));
@@ -59,5 +59,5 @@ final class PlaylistBody implements ReadCallback {
         return response;
     }
 
-    static String text(byte[] body) { return new String(body, StandardCharsets.UTF_8); }
+    public static String text(byte[] body) { return new String(body, StandardCharsets.UTF_8); }
 }
