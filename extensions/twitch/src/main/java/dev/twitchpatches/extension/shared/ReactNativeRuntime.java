@@ -16,19 +16,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.WeakHashMap;
+import dev.twitchpatches.extension.badges.BadgeRuntime;
 import dev.twitchpatches.extension.channelpoints.ChannelPointsRuntime;
 import dev.twitchpatches.extension.promotions.PromotionSettings;
 import dev.twitchpatches.extension.promotions.SubscriptionBannerSettings;
 import dev.twitchpatches.extension.ads.AdSettings;
 import dev.twitchpatches.extension.emotes.EmoteRuntime;
 import dev.twitchpatches.extension.emotes.FavoriteEmotes;
+import dev.twitchpatches.extension.playback.BackgroundPlayback;
 import dev.twitchpatches.extension.reload.ReloadRuntime;
 import dev.twitchpatches.extension.ui.UiSettings;
 import dev.twitchpatches.extension.chat.DeletedMessageSettings;
 
 public final class ReactNativeRuntime implements Application.ActivityLifecycleCallbacks {
     private static final WeakHashMap<Object, Boolean> instances = new WeakHashMap<>();
-    private static final boolean[] selected = new boolean[10];
+    private static final boolean[] selected = new boolean[11];
     private static boolean initialized;
     private static int resumed;
     private static volatile CompletableFuture<String> bootstrap;
@@ -37,6 +39,7 @@ public final class ReactNativeRuntime implements Application.ActivityLifecycleCa
         if (initialized) return;
         initialized = true;
         TwitchTheme.initialize(application);
+        BackgroundPlayback.initialize(application);
         application.registerActivityLifecycleCallbacks(new ReactNativeRuntime());
         ExecutorService worker = Executors.newSingleThreadExecutor(task -> new Thread(task, "TwitchPatchAssets"));
         bootstrap = new CompletableFuture<>();
@@ -115,8 +118,11 @@ public final class ReactNativeRuntime implements Application.ActivityLifecycleCa
                 selected[4] && EmoteRuntime.providerEnabled(0), selected[4] && EmoteRuntime.providerEnabled(1),
                 selected[4] && EmoteRuntime.providerEnabled(2), TwitchTheme.light(),
                 selected[8] && DeletedMessageSettings.enabled(), selected[9] && FavoriteEmotes.enabled(),
-                selected[4] && EmoteRuntime.inlineEnabled()};
+                selected[4] && EmoteRuntime.inlineEnabled(),
+                badgeEnabled(0), badgeEnabled(1), badgeEnabled(2), badgeEnabled(3)};
     }
+
+    private static boolean badgeEnabled(int provider) { return selected[10] && BadgeRuntime.providerEnabled(provider); }
 
     private static void dispatch(Object instance, boolean[] policy) {
         throw new IllegalStateException("React Native policy bridge was not generated.");

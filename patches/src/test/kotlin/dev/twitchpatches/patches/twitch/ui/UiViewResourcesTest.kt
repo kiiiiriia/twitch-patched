@@ -28,6 +28,25 @@ class UiViewResourcesTest {
         assertEquals("android.widget.FrameLayout", types.values.single())
     }
 
+    @Test fun wrappedImageViewsKeepTheirAppCompatTint() {
+        val source = "<LinearLayout xmlns:android='http://schemas.android.com/apk/res/android' xmlns:app='http://schemas.android.com/apk/res-auto'>" +
+            "<ImageView android:id='@id/bit_picker' app:tint='@color/message_input_button_off'/></LinearLayout>"
+        val document = parseResourceXml(rewriteUiLayout(source, mapOf("bit_picker" to "classic_support_hide_bits"), mutableMapOf(), "message_input"))
+        val node = document.getElementsByTagName("dev.twitchpatches.extension.ui.views.ImageView").item(0) as Element
+        assertEquals("@color/message_input_button_off", node.getAttribute("android:tint"))
+    }
+
+    @Test fun collapsingContainerKeepsItsBackgroundAndHasNoHideOption() {
+        val source = "<LinearLayout xmlns:android='http://schemas.android.com/apk/res/android'>" +
+            "<FrameLayout android:id='@id/compact_pill_carousel_container' android:background='@color/background_base'/></LinearLayout>"
+        val types = mutableMapOf<String, String>()
+        val document = parseResourceXml(rewriteUiCollapsingContainer(source, "compact_pill_carousel_container", types, "pinned_cheer"))
+        val node = document.getElementsByTagName("dev.twitchpatches.extension.ui.views.CollapsingFrameLayout").item(0) as Element
+        assertEquals("@color/background_base", node.getAttribute("android:background"))
+        assertFalse(node.hasAttribute("android:tag"))
+        assertEquals("android.widget.FrameLayout", types.values.single())
+    }
+
     @Test fun missingAndDuplicateControlsFailBeforeBindingTheWrongElement() {
         val source = "<LinearLayout xmlns:android='http://schemas.android.com/apk/res/android'><ImageView android:id='@id/cast'/><ImageView android:id='@id/cast'/></LinearLayout>"
         for (id in listOf("cast", "missing")) assertThrows(Exception::class.java) {

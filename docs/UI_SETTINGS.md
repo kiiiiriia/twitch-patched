@@ -1,7 +1,7 @@
 # UI settings
 
-UI settings are available through Patch settings, player settings and V2 chat
-settings. Customization options are off by default and apply without restarting
+UI settings are available through Patch settings, player settings and React Native
+chat settings. Customization options are off by default and apply without restarting
 Twitch.
 
 ## Controls
@@ -18,7 +18,9 @@ Twitch provides the corresponding control.
 
 Empty action rows and dividers collapse automatically. Remaining actions keep
 their order, spacing and callbacks. Extension settings also cover overflow
-buttons and containers beside the leaderboard.
+buttons and containers beside the leaderboard. Bits settings also cover the chat
+input button in Classic Split. The paid pinned message row above native chat takes
+no space while it has no messages, with or without any option.
 
 Hype Train settings cover banners and player overlays. Leaderboard settings
 separate channel rankings from the player button. Hidden Hype Trains retain their current state and can be shown again
@@ -68,7 +70,7 @@ bound any tree traversal. Update parent availability as well as child visibility
 ## Verification
 
 Check both toggle directions, mixed groups, search, Back navigation and omitted
-patches. Cover native and V2 players, themes, rotation and temporary detachment.
+patches. Cover native and React Native players, themes, rotation and temporary detachment.
 System-bar tests must include enabling an option again with unchanged insets.
 Check unlocked landscape playback as well as rotation-locked fullscreen, and
 confirm that Home and the mini-player retain normal insets.

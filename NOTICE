@@ -90,3 +90,10 @@ Show deleted messages adapted from patches/twitch/chat/ShowDeletedMessagesPatch.
 and ChatFingerprints.kt in arandomhooman/hoomans-morphe-patches (commit above),
 GPL-3.0. Changes: structural formatter discovery, the sender name span derived
 from the formatter code, a settings toggle and React Native chat support.
+
+Sub-only VOD playback: besuper/TwitchNoSub, commit
+e01ccfe6a878fb9fc561ac80c85de6244e54b4c9, GNU GPL version 3.
+https://github.com/besuper/TwitchNoSub
+Ported the restricted usher fallback (metadata query, CDN rendition probing,
+master playlist generation and muted-segment rewrite) from the browser worker
+patch to an IVS HttpClient wrapper in Java.
